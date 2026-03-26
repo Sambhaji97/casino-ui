@@ -115,8 +115,8 @@ export default function GamesGrid() {
           className="grid gap-3"
           style={{ gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))" }}
         >
-          {filteredGames.map((game) => (
-            <GameCard key={game.id} game={game} />
+          {filteredGames.map((game, index) => (
+            <GameCard key={game.id} game={game} priority={index < 6} />
           ))}
         </div>
       )}

@@ -47,7 +47,7 @@ export function CasinoProvider({ children }: { children: React.ReactNode }) {
   const [isLoadingSlots, setIsLoadingSlots] = useState(true);
 
   useEffect(() => {
-    fetch("https://supaskins-backend.azurewebsites.net/api/v1/casino/categories-with-games")
+    fetch("/api/categories")
       .then((res) => res.json())
       .then((data) => {
         if (data.status && data.data) {
@@ -63,7 +63,7 @@ export function CasinoProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    fetch("https://supaskins-backend.azurewebsites.net/api/v1/home/top-items/slots")
+    fetch("/api/top-slots")
       .then((res) => res.json())
       .then((data) => {
         if (data.status && data.data) {

@@ -97,7 +97,7 @@ export default function TopSlotsSection() {
           style={{ gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))" }}
         >
           {displaySlots.map((game, index) => (
-            <GameCard key={game.id} game={game} rank={index + 1} />
+            <GameCard key={game.id} game={game} rank={index + 1} priority={index < 3} />
           ))}
         </div>
       )}

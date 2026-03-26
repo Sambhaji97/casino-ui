@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useRef } from "react";
-import Image from "next/image";
 import { useCasino, Category } from "../context/CasinoContext";
+
 
 function CategoryTab({
   category,
@@ -30,16 +30,16 @@ function CategoryTab({
         style={{ background: "var(--bg-card)" }}
       >
         {category.slug ? (
-          <Image
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
             src={category.slug}
             alt={category.name}
-            width={28}
-            height={28}
-            className="object-contain"
+            width={24}
+            height={24}
+            style={{ width: 24, height: 24, objectFit: "contain" }}
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).style.display = "none";
             }}
-            unoptimized
           />
         ) : (
           <span className="text-xs font-bold" style={{ color: "var(--text-muted)" }}>

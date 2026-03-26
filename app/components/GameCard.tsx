@@ -7,9 +7,10 @@ import { Game } from "../context/CasinoContext";
 interface GameCardProps {
   game: Game;
   rank?: number; // for top slots
+  priority?: boolean; // for LCP optimization
 }
 
-export default function GameCard({ game, rank }: GameCardProps) {
+export default function GameCard({ game, rank, priority = false }: GameCardProps) {
   const [imgError, setImgError] = useState(false);
   const [imgV2Error, setImgV2Error] = useState(false);
 
@@ -17,8 +18,8 @@ export default function GameCard({ game, rank }: GameCardProps) {
     !imgV2Error && game.imageUrlV2
       ? game.imageUrlV2
       : !imgError
-      ? game.imageUrl
-      : null;
+        ? game.imageUrl
+        : null;
 
   return (
     <div
@@ -63,6 +64,7 @@ export default function GameCard({ game, rank }: GameCardProps) {
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
               className="object-cover"
               onError={() => setImgV2Error(true)}
+              priority={priority}
               unoptimized
             />
           ) : !imgError ? (
@@ -73,6 +75,7 @@ export default function GameCard({ game, rank }: GameCardProps) {
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
               className="object-cover"
               onError={() => setImgError(true)}
+              priority={priority}
               unoptimized
             />
           ) : (
