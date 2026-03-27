@@ -114,7 +114,24 @@ export default function TopSlotsPage() {
               style={{ gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))" }}
             >
               {slots.map((game, index) => (
-                <GameCard key={game.id} game={game} rank={index + 1} />
+                <div key={game.id} className="relative">
+                  <GameCard game={game} priority={index < 4} />
+                  <span 
+                    className="absolute pointer-events-none font-black"
+                    style={{ 
+                      bottom: "-6px",
+                      left: "-4px",
+                      zIndex: 30,
+                      fontSize: "64px",
+                      lineHeight: "1",
+                      color: "black", 
+                      WebkitTextStroke: "1px rgba(255, 255, 255, 0.8)",
+                      textShadow: "2px 4px 6px rgba(0,0,0,0.5)"
+                    }}
+                  >
+                    {index + 1}
+                  </span>
+                </div>
               ))}
             </div>
           </>
