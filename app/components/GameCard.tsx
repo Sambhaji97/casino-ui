@@ -6,11 +6,10 @@ import { Game } from "../context/CasinoContext";
 
 interface GameCardProps {
   game: Game;
-  rank?: number; // for top slots
   priority?: boolean; // for LCP optimization
 }
 
-export default function GameCard({ game, rank, priority = false }: GameCardProps) {
+export default function GameCard({ game, priority = false }: GameCardProps) {
   const [imgError, setImgError] = useState(false);
   const [imgV2Error, setImgV2Error] = useState(false);
 
@@ -43,16 +42,6 @@ export default function GameCard({ game, rank, priority = false }: GameCardProps
         (e.currentTarget as HTMLDivElement).style.borderColor = "var(--border)";
       }}
     >
-      {/* Rank badge */}
-      {rank && (
-        <div
-          className="absolute top-2 left-2 z-20 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
-          style={{ background: "var(--accent)", color: "white" }}
-        >
-          {rank}
-        </div>
-      )}
-
       {/* Game image */}
       {imageUrl ? (
         <div className="absolute inset-0">

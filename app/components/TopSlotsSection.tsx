@@ -45,36 +45,71 @@ export default function TopSlotsSection() {
           <h2 className="text-xl font-bold text-white">Top 10 Slots Today</h2>
         </div>
 
-        <Link
-          id="view-all-slots-btn"
-          href="/top-slots"
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
-          style={{
-            background: "var(--accent)",
-            color: "white",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent-hover)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent)";
-          }}
-        >
-          View All
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        <div className="flex items-center gap-4">
+          <Link
+            id="view-all-slots-btn"
+            href="/top-slots"
+            className="text-sm font-semibold text-white transition-colors px-3 py-1.5 rounded"
+            style={{
+              textDecoration: "none",
+              background: "transparent",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+            }}
           >
-            <path d="m9 18 6-6-6-6" />
-          </svg>
-        </Link>
+            View All
+          </Link>
+          <div className="flex items-center gap-[2px]">
+            <button
+              className="flex items-center justify-center w-7 h-7 rounded shrink-0 transition-colors"
+              style={{ background: "#33353b", color: "#a5a7aa" }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "var(--accent)";
+                (e.currentTarget as HTMLButtonElement).style.color = "white";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "#33353b";
+                (e.currentTarget as HTMLButtonElement).style.color = "#a5a7aa";
+              }}
+              aria-label="Previous"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+              >
+                <path d="M16 6 L8 12 L16 18 Z" fill="currentColor" />
+              </svg>
+            </button>
+            <button
+              className="flex items-center justify-center w-7 h-7 rounded shrink-0 transition-colors"
+              style={{ background: "#33353b", color: "#a5a7aa" }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "var(--accent)";
+                (e.currentTarget as HTMLButtonElement).style.color = "white";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "#33353b";
+                (e.currentTarget as HTMLButtonElement).style.color = "#a5a7aa";
+              }}
+              aria-label="Next"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 6 L16 12 L8 18 Z" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Slots grid */}
@@ -97,7 +132,25 @@ export default function TopSlotsSection() {
           style={{ gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))" }}
         >
           {displaySlots.map((game, index) => (
-            <GameCard key={game.id} game={game} rank={index + 1} priority={index < 3} />
+            <div key={game.id} className="relative">
+              <GameCard game={game} priority={index < 3} />
+              
+              <span 
+                className="absolute pointer-events-none font-black"
+                style={{ 
+                  bottom: "-6px",
+                  left: "-4px",
+                  zIndex: 30,
+                  fontSize: "64px",
+                  lineHeight: "1",
+                  color: "black", 
+                  WebkitTextStroke: "1px rgba(255, 255, 255, 0.8)",
+                  textShadow: "2px 4px 6px rgba(0,0,0,0.5)"
+                }}
+              >
+                {index + 1}
+              </span>
+            </div>
           ))}
         </div>
       )}

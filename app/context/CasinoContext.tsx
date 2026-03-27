@@ -51,10 +51,11 @@ export function CasinoProvider({ children }: { children: React.ReactNode }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.status && data.data) {
-          setCategories(data.data);
+          const filtered = data.data.filter((c: Category) => c.name !== "Last Played");
+          setCategories(filtered);
           // Default: select first category
-          if (data.data.length > 0) {
-            setSelectedCategoryId(data.data[0].id);
+          if (filtered.length > 0) {
+            setSelectedCategoryId(filtered[0].id);
           }
         }
       })
