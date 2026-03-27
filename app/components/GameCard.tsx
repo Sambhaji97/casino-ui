@@ -75,33 +75,18 @@ export default function GameCard({ game, priority = false }: GameCardProps) {
         <PlaceholderImage name={game.name} />
       )}
 
-      {/* Hover overlay */}
       <div
-        className="absolute inset-0 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+        className="absolute inset-0 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
         style={{
           background:
             "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 100%)",
         }}
       >
-        <p
-          className="font-semibold text-sm leading-tight text-white truncate"
-        >
+        <p className="font-semibold text-sm leading-tight text-white truncate">
           {game.name}
         </p>
         <p className="text-xs mt-0.5 truncate" style={{ color: "var(--text-muted)" }}>
           {game.providerName}
-        </p>
-      </div>
-
-      {/* Always visible name at bottom for mobile */}
-      <div
-        className="absolute bottom-0 left-0 right-0 px-2 py-1.5 group-hover:opacity-0 transition-opacity duration-200"
-        style={{
-          background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
-        }}
-      >
-        <p className="text-xs font-medium text-white truncate leading-tight">
-          {game.name}
         </p>
       </div>
     </div>

@@ -8,11 +8,11 @@ export default function Home() {
   return (
     <CasinoProvider>
       <div className="min-h-screen flex flex-col" style={{ background: "var(--bg-primary)" }}>
+        <TopSlotsSection />
         <SearchBar />
         <CategoryTabs />
         <main className="flex-1 flex flex-col">
           <GamesGrid />
-          <TopSlotsSection />
         </main>
       </div>
     </CasinoProvider>

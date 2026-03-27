@@ -1,12 +1,23 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import { useCasino } from "../context/CasinoContext";
 import GameCard from "./GameCard";
 
 export default function TopSlotsSection() {
   const { topSlots, isLoadingSlots } = useCasino();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const scrollAmount = window.innerWidth > 768 ? 600 : 300;
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const displaySlots = topSlots.slice(0, 10);
 
@@ -65,6 +76,7 @@ export default function TopSlotsSection() {
           </Link>
           <div className="flex items-center gap-[2px]">
             <button
+              onClick={() => scroll("left")}
               className="flex items-center justify-center w-7 h-7 rounded shrink-0 transition-colors"
               style={{ background: "#33353b", color: "#a5a7aa" }}
               onMouseEnter={(e) => {
@@ -87,6 +99,7 @@ export default function TopSlotsSection() {
               </svg>
             </button>
             <button
+              onClick={() => scroll("right")}
               className="flex items-center justify-center w-7 h-7 rounded shrink-0 transition-colors"
               style={{ background: "#33353b", color: "#a5a7aa" }}
               onMouseEnter={(e) => {
@@ -115,24 +128,30 @@ export default function TopSlotsSection() {
       {/* Slots grid */}
       {isLoadingSlots ? (
         <div
-          className="grid gap-3"
-          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))" }}
+          className="flex gap-3 overflow-x-auto pb-4"
+          style={{ scrollbarWidth: "none" }}
         >
           {Array.from({ length: 10 }).map((_, i) => (
             <div
               key={i}
-              className="rounded-xl animate-pulse"
+              className="rounded-xl animate-pulse shrink-0 w-[140px]"
               style={{ background: "var(--bg-card)", aspectRatio: "3/4" }}
             />
           ))}
         </div>
       ) : (
         <div
-          className="grid gap-3"
-          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))" }}
+          ref={scrollRef}
+          className="flex gap-3 overflow-x-auto pb-4 scroll-smooth"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
+          <style>{`
+            #top-slots-section .overflow-x-auto::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
           {displaySlots.map((game, index) => (
-            <div key={game.id} className="relative">
+            <div key={game.id} className="relative shrink-0 w-[140px]">
               <GameCard game={game} priority={index < 3} />
               
               <span 

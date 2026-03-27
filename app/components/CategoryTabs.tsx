@@ -17,32 +17,43 @@ function CategoryTab({
     <button
       id={`category-tab-${category.id}`}
       onClick={onClick}
-      className="flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all duration-200 flex-shrink-0 min-w-[72px] group"
+      className="flex flex-col items-center justify-center gap-2 p-3 transition-all duration-200 flex-shrink-0 group"
       style={{
-        background: isActive ? "rgba(230,57,70,0.12)" : "transparent",
-        border: isActive ? "1px solid var(--accent)" : "1px solid transparent",
-        color: isActive ? "var(--accent)" : "var(--text-secondary)",
+        width: "110px",
+        height: "105px",
+        borderRadius: "16px",
+        background: isActive 
+          ? "linear-gradient(180deg, #373A43 0%, #1A1B20 100%)" 
+          : "linear-gradient(180deg, #2D3038 0%, #17181D 100%)",
+        border: isActive ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent",
+        opacity: isActive ? 1 : 0.7,
+        boxShadow: "0 4px 6px rgba(0,0,0,0.3)",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.opacity = "1";
+        (e.currentTarget as HTMLButtonElement).style.border = "1px solid rgba(255,255,255,0.2)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.opacity = isActive ? "1" : "0.7";
+        (e.currentTarget as HTMLButtonElement).style.border = isActive ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent";
       }}
     >
       {/* Category icon */}
-      <div
-        className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0"
-        style={{ background: "var(--bg-card)" }}
-      >
+      <div className="flex items-center justify-center h-10 w-10 overflow-hidden flex-shrink-0">
         {category.slug ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={category.slug}
             alt={category.name}
-            width={24}
-            height={24}
-            style={{ width: 24, height: 24, objectFit: "contain" }}
+            width={32}
+            height={32}
+            style={{ width: "100%", height: "100%", objectFit: "contain", filter: "brightness(0) invert(1)" }}
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).style.display = "none";
             }}
           />
         ) : (
-          <span className="text-xs font-bold" style={{ color: "var(--text-muted)" }}>
+          <span className="text-lg font-bold text-white">
             {category.name.charAt(0)}
           </span>
         )}
@@ -50,19 +61,11 @@ function CategoryTab({
 
       {/* Category name */}
       <span
-        className="text-center leading-tight font-medium"
-        style={{ fontSize: "10px", whiteSpace: "nowrap" }}
+        className="text-center font-semibold leading-tight text-white mb-1"
+        style={{ fontSize: "12px", WebkitLineClamp: 2, display: "-webkit-box", WebkitBoxOrient: "vertical", overflow: "hidden" }}
       >
         {category.name}
       </span>
-
-      {/* Active indicator */}
-      {isActive && (
-        <div
-          className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
-          style={{ background: "var(--accent)" }}
-        />
-      )}
     </button>
   );
 }

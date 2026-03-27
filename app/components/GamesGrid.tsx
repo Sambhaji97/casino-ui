@@ -10,6 +10,12 @@ export default function GamesGrid() {
 
   const selectedCategory = categories.find((c) => c.id === selectedCategoryId);
 
+  const [visibleCount, setVisibleCount] = React.useState(24);
+
+  React.useEffect(() => {
+    setVisibleCount(24);
+  }, [selectedCategoryId, searchQuery]);
+
   if (isLoading) {
     return (
       <div
@@ -32,6 +38,8 @@ export default function GamesGrid() {
       </div>
     );
   }
+
+  const displayedGames = filteredGames.slice(0, visibleCount);
 
   return (
     <div className="w-full px-4 py-4" style={{ background: "var(--bg-primary)" }}>
@@ -111,14 +119,38 @@ export default function GamesGrid() {
           <p style={{ color: "var(--text-secondary)" }}>No games found</p>
         </div>
       ) : (
-        <div
-          className="grid gap-3"
-          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))" }}
-        >
-          {filteredGames.map((game, index) => (
-            <GameCard key={game.id} game={game} priority={index < 6} />
-          ))}
-        </div>
+        <>
+          <div
+            className="grid gap-3"
+            style={{ gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))" }}
+          >
+            {displayedGames.map((game, index) => (
+              <GameCard key={game.id} game={game} priority={index < 6} />
+            ))}
+          </div>
+
+          {visibleCount < filteredGames.length && (
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={() => setVisibleCount((prev) => prev + 24)}
+                className="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200"
+                style={{
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border)",
+                  color: "white",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--accent)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
+                }}
+              >
+                Load More Games
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
